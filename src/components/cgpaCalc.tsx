@@ -1,9 +1,5 @@
 'use client';
-
 import { useState, FormEvent } from 'react';
-// import { Button } from "@/components/ui/button"
-// import { Input } from "@/components/ui/input"
-// import { Plus } from 'lucide-react'
 import AddIcon from '@mui/icons-material/Add';
 
 interface subjectInterface {
@@ -15,24 +11,6 @@ interface subjectInterface {
 	// TODO: add lab type here to render theory and labs separately
 }
 
-// Helper function to generate random subject names
-const generateSubjectName = () => {
-	const subjects = [
-		'Economics for Engineers',
-		'Compiler Design',
-		'Operating Systems',
-		'Computer Networks',
-		'Software Engineering',
-		'Design and Analysis of Algorithm',
-		'Compiler Design Lab',
-		'Operating Systems Lab',
-		'Computer Networks Lab',
-		'Software Engineering Lab',
-		'Design and Analysis of Algorithm Lab ',
-		'Summer Training Report - 1',
-	];
-	return subjects[Math.floor(Math.random() * subjects.length)];
-};
 
 const subjectsData: subjectInterface[] = [
 	{
@@ -47,72 +25,67 @@ const subjectsData: subjectInterface[] = [
 		paperId: '031303',
 		credits: 3,
 	},
-	// {
-	// 	subjectName: "Operating Systems",
-	// 	subjectCode: "CIC-305",
-	// 	paperId: "031305",
-	// 	credits: 4,
-	// },
-	// {
-	// 	subjectName: "Computer Networks",
-	// 	subjectCode: "CIC-307",
-	// 	paperId: "031307",
-	// 	credits: 4,
-	// },
-	// {
-	// 	subjectName: "Software Engineering",
-	// 	subjectCode: "CIC-309",
-	// 	paperId: "031309",
-	// 	credits: 3,
-	// },
-	// {
-	// 	subjectName: "Design and Analysis of Algorithm",
-	// 	subjectCode: "CIC-311",
-	// 	paperId: "031311",
-	// 	credits: 4,
-	// },
-	// {
-	// 	subjectName: "Compiler Design Lab",
-	// 	subjectCode: "CIC-351",
-	// 	paperId: "031351",
-	// 	credits: 2,
-	// },
-	// {
-	// 	subjectName: "Operating Systems Lab",
-	// 	subjectCode: "CIC-353",
-	// 	paperId: "031353",
-	// 	credits: 2,
-	// },
-	// {
-	// 	subjectName: "Computer Networks Lab",
-	// 	subjectCode: "CIC-355",
-	// 	paperId: "031355",
-	// 	credits: 2,
-	// },
-	// {
-	// 	subjectName: "Software Engineering Lab",
-	// 	subjectCode: "CIC-357",
-	// 	paperId: "031357",
-	// 	credits: 2,
-	// },
-	// {
-	// 	subjectName: "Design and Analysis of Algorithm Lab",
-	// 	subjectCode: "CIC-359",
-	// 	paperId: "031359",
-	// 	credits: 2,
-	// },
-	// {
-	// 	subjectName: "Summer Training Report - 1",
-	// 	subjectCode: "ES-361",
-	// 	paperId: "031361",
-	// 	credits: 2,
-	// },
+	{
+		subjectName: 'Operating Systems',
+		subjectCode: 'CIC-305',
+		paperId: '031305',
+		credits: 4,
+	},
+	{
+		subjectName: 'Computer Networks',
+		subjectCode: 'CIC-307',
+		paperId: '031307',
+		credits: 4,
+	},
+	{
+		subjectName: 'Software Engineering',
+		subjectCode: 'CIC-309',
+		paperId: '031309',
+		credits: 3,
+	},
+	{
+		subjectName: 'Design and Analysis of Algorithm',
+		subjectCode: 'CIC-311',
+		paperId: '031311',
+		credits: 4,
+	},
+	{
+		subjectName: 'Compiler Design Lab',
+		subjectCode: 'CIC-351',
+		paperId: '031351',
+		credits: 2,
+	},
+	{
+		subjectName: 'Operating Systems Lab',
+		subjectCode: 'CIC-353',
+		paperId: '031353',
+		credits: 2,
+	},
+	{
+		subjectName: 'Computer Networks Lab',
+		subjectCode: 'CIC-355',
+		paperId: '031355',
+		credits: 2,
+	},
+	{
+		subjectName: 'Software Engineering Lab',
+		subjectCode: 'CIC-357',
+		paperId: '031357',
+		credits: 2,
+	},
+	{
+		subjectName: 'Design and Analysis of Algorithm Lab',
+		subjectCode: 'CIC-359',
+		paperId: '031359',
+		credits: 2,
+	},
+	{
+		subjectName: 'Summer Training Report - 1',
+		subjectCode: 'ES-361',
+		paperId: '031361',
+		credits: 2,
+	},
 ];
-
-// Helper function to generate random codes
-const generateCode = () => {
-	return Math.random().toString(36).substring(2, 7).toUpperCase();
-};
 
 // Generate initial data
 const initialData = subjectsData.map((subject) => ({
@@ -269,7 +242,7 @@ export default function CGPACalculator() {
 					</button>
 					<button
 						type="submit"
-						className="rounded-lg border  border-gray-300 p-2 transition-transform duration-300 hover:-translate-y-0.5 active:shadow hover:shadow-sm active:translate-y-0.5 "
+						className="rounded-lg border border-gray-300 p-2 transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0.5 active:shadow"
 					>
 						Calculate CGPA
 					</button>
