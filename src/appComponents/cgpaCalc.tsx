@@ -1,6 +1,7 @@
 'use client';
 import { useState, FormEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import { ConfettiButton } from '@/components/ui/confetti';
 
 interface subjectInterface {
 	subjectName: string;
@@ -10,7 +11,6 @@ interface subjectInterface {
 	// marks: number;  TODO: do we need this?
 	// TODO: add lab type here to render theory and labs separately
 }
-
 
 const subjectsData: subjectInterface[] = [
 	{
@@ -126,6 +126,13 @@ export default function CGPACalculator() {
 		]);
 	};
 
+	const scrollToBottom = (): void => {
+		window.scrollTo({
+			top: document.documentElement.scrollHeight,
+			behavior: 'smooth',
+		});
+	};
+
 	const calculateCGPA = (e: FormEvent) => {
 		e.preventDefault();
 		let totalCredits = 0;
@@ -169,10 +176,12 @@ export default function CGPACalculator() {
 		const calculatedCGPA = totalGradePoints / totalCredits;
 		console.log('The calculated CGPA is: ' + calculatedCGPA);
 		setCGPA(isNaN(calculatedCGPA) ? null : parseFloat(calculatedCGPA.toFixed(3)));
+
+		scrollToBottom();
 	};
 
 	return (
-		<div className="container mx-auto p-4">
+		<div className="container mx-auto rounded-lg border bg-white p-4 shadow-md">
 			<h1 className="mb-4 text-2xl font-bold">CGPA Calculator*</h1>
 			<div className="mb-4">* Only valid for 5th sem IT students</div>
 			<form onSubmit={calculateCGPA}>
@@ -236,16 +245,28 @@ export default function CGPACalculator() {
 					</table>
 				</div>
 				<div className="mt-4 flex items-center justify-between">
-					<button type="button" onClick={addNewRow} className="flex items-center">
+					<button
+						type="button"
+						onClick={addNewRow}
+						// className="flex items-center rounded-lg border border-gray-300 p-2 transition-transform active:translate-y-0.5 active:shadow"
+						className="flex items-center rounded-lg border border-gray-300 bg-white p-3 text-gray-800 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow active:translate-y-0.5 active:bg-gray-200"
+					>
 						<AddIcon className="mr-2 h-4 w-4" />
 						Add Row
 					</button>
-					<button
+					<ConfettiButton
+						options={{ particleCount: 100, spread: 135, ticks: 400 }}
 						type="submit"
-						className="rounded-lg border border-gray-300 p-2 transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0.5 active:shadow"
+						className="rounded-lg border border-gray-300 bg-white py-2 text-black transition-all duration-200 ease-in-out hover:bg-gray-100 hover:shadow-lg active:translate-y-0.5 active:bg-gray-200"
 					>
 						Calculate CGPA
-					</button>
+					</ConfettiButton>
+					{/* <button
+						type="submit"
+						className="rounded-lg border border-gray-300 bg-white p-2 transition-all duration-200 ease-in-out hover:bg-gray-100 hover:shadow-lg active:translate-y-0.5 active:bg-gray-200"
+					>
+						Calculate CGPA
+					</button> */}
 				</div>
 			</form>
 			{cgpa !== null && (
