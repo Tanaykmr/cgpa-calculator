@@ -1,5 +1,5 @@
 import './App.css';
-import CGPACalculator from './components/CgpaCalc';
+import CGPACalculator from './components/cgpaCalc';
 
 function App() {
 	return (
