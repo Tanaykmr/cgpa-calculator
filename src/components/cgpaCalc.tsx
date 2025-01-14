@@ -168,7 +168,7 @@ export default function CGPACalculator() {
 		console.log('The total credits are: ' + totalCredits);
 		const calculatedCGPA = totalGradePoints / totalCredits;
 		console.log('The calculated CGPA is: ' + calculatedCGPA);
-		setCGPA(isNaN(calculatedCGPA) ? null : parseFloat(calculatedCGPA.toFixed(2)));
+		setCGPA(isNaN(calculatedCGPA) ? null : parseFloat(calculatedCGPA.toFixed(3)));
 	};
 
 	return (
