@@ -178,7 +178,7 @@ export default function CGPACalculator() {
 						</tbody>
 					</table>
 				</div>
-				<div className="mt-4 flex items-center justify-between">
+				<div className="mt-4 flex items-center justify-between gap-2">
 					<div className="flex gap-2">
 						<button
 							type="button"
