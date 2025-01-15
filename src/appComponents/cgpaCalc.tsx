@@ -1,11 +1,11 @@
-import { ConfettiButton } from '@/components/ui/confetti';
 import { marksData } from '@/data/marksData/marksData';
 import { subjectsData } from '@/data/subjectData/subjectData';
 import { Branch } from '@/types';
 import AddIcon from '@mui/icons-material/Add';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import eqn from '/eqn.svg';
 import book from '/book.png';
+import confetti from 'canvas-confetti';
 
 export default function CGPACalculator() {
 	// State variables
@@ -20,6 +20,12 @@ export default function CGPACalculator() {
 		marks: 0, // Default marks initialized to 0
 	}));
 	const [data, setData] = useState(initialData);
+
+	useEffect(() => {
+		if (cgpa) {
+			launchConfetti();
+		}
+	}, [cgpa]);
 
 	const handleInputChange = (index: number, field: string, value: number): void => {
 		const newData = [...data];
@@ -83,12 +89,23 @@ export default function CGPACalculator() {
 		setCGPA(isNaN(calculatedCGPA) ? null : parseFloat(calculatedCGPA.toFixed(3)));
 	};
 
+	function launchConfetti() {
+		confetti({
+			// particleCount: 100,
+			// spread: 70,
+			// origin: { y: 0.6 },
+			particleCount: 100,
+			spread: 135,
+			ticks: 400,
+		});
+	}
+
 	return (
 		<div className="container mx-auto flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-md">
 			<h1 className="flex items-center gap-2 text-2xl font-bold text-[#041E54]">
 				IPU CGPA Calculator <img src={book} height={32} width={32} />
 			</h1>
-			<div className="mb-2">* Only works for 5th sem CSE and IT students</div>
+			<div className="mb-2">* Only works for 5th sem CSE, IT and ECE</div>
 			<div className="mb-4 flex items-center">
 				<label htmlFor="branch" className="mr-2 text-lg font-medium text-gray-700">
 					Select Branch:
@@ -165,25 +182,27 @@ export default function CGPACalculator() {
 						<AddIcon className="mr-2 h-4 w-4" />
 						Add Row
 					</button>
-					<ConfettiButton
+					{/* <ConfettiButton
 						options={{ particleCount: 100, spread: 135, ticks: 400 }}
 						type="submit"
 						className="rounded-lg border border-gray-300 bg-white py-2 text-black transition-all duration-200 ease-in-out hover:bg-gray-100 hover:shadow-lg active:translate-y-0.5 active:bg-gray-200"
 					>
 						Calculate CGPA
-					</ConfettiButton>
-					{/* <button
+					</ConfettiButton> */}
+					<button
 						type="submit"
 						className="rounded-lg border border-gray-300 bg-white p-2 transition-all duration-200 ease-in-out hover:bg-gray-100 hover:shadow-lg active:translate-y-0.5 active:bg-gray-200"
 					>
 						Calculate CGPA
-					</button> */}
+					</button>
 				</div>
 			</form>
 			{cgpa !== null && (
+				// ... existing code ...
 				<div className="mt-4">
 					<p className="text-xl font-bold">Your CGPA: {cgpa}</p>
 				</div>
+				// ... existing code ...
 			)}
 			<div className="info-div mt-4 flex flex-col gap-4">
 				<div>
