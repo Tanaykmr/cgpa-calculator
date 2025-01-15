@@ -1,13 +1,12 @@
 import { marksData } from '@/data/marksData/marksData';
 import { subjectsData } from '@/data/subjectData/subjectData';
 import { Branch } from '@/types';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { FormEvent, useEffect, useState } from 'react';
-import eqn from '/eqn.svg';
-import book from '/book.png';
-import confetti from 'canvas-confetti';
 import { Delete } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import confetti from 'canvas-confetti';
+import { FormEvent, useEffect, useState } from 'react';
+import book from '/book.png';
+import eqn from '/eqn.svg';
 
 export default function CGPACalculator() {
 	// State variables
