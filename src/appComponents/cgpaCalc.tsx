@@ -1,40 +1,43 @@
-'use client';
-import { useState, FormEvent } from 'react';
-import AddIcon from '@mui/icons-material/Add';
 import { ConfettiButton } from '@/components/ui/confetti';
-import { subjectsData } from '@/subjectData/subjectData';
-import eqn from '../../public/eqn.svg';
-
-// Generate initial data
-const initialData = subjectsData.map((subject) => ({
-	// TODO: add type for this
-	// TODO: define a type for this
-	subjectName: subject.subjectName,
-	paperCode: subject.paperId,
-	subjectCode: subject.subjectCode,
-	credits: subject.credits,
-	marks: 0,
-}));
-
-const marksData = [
-	{ marksRange: '90-100', grade: 'O', gradePoint: 10 },
-	{ marksRange: '75-89', grade: 'A+', gradePoint: 9 },
-	{ marksRange: '65-74', grade: 'A', gradePoint: 8 },
-	{ marksRange: '55-64', grade: 'B+', gradePoint: 7 },
-	{ marksRange: '50-54', grade: 'B', gradePoint: 6 },
-	{ marksRange: '45-49', grade: 'C', gradePoint: 5 },
-	{ marksRange: '40-44', grade: 'P', gradePoint: 4 },
-	{ marksRange: 'Less than 40 or absent', grade: 'F', gradePoint: 0 },
-];
+import { marksData } from '@/data/marksData/marksData';
+import { subjectsData } from '@/data/subjectData/subjectData';
+import { Branch } from '@/types';
+import AddIcon from '@mui/icons-material/Add';
+import { FormEvent, useState } from 'react';
+import eqn from '/eqn.svg';
+import book from '/book.png';
 
 export default function CGPACalculator() {
-	const [data, setData] = useState(initialData);
+	// State variables
+	const [branch, setBranch] = useState<Branch>(Branch.CSE_IT);
 	const [cgpa, setCGPA] = useState<number | null>(null);
+
+	const initialData = subjectsData[branch].map((subject) => ({
+		subjectName: subject.subjectName,
+		paperCode: subject.paperId,
+		subjectCode: subject.subjectCode,
+		credits: subject.credits,
+		marks: 0, // Default marks initialized to 0
+	}));
+	const [data, setData] = useState(initialData);
 
 	const handleInputChange = (index: number, field: string, value: number): void => {
 		const newData = [...data];
 		newData[index] = { ...newData[index], [field]: value };
 		setData(newData);
+	};
+	const handleBranchChange = (e: FormEvent<HTMLSelectElement>) => {
+		const selectedBranch = e.currentTarget.value as Branch;
+		console.log('selectedBranch', selectedBranch);
+		setBranch(selectedBranch);
+		const newInitialData = subjectsData[selectedBranch].map((subject) => ({
+			subjectName: subject.subjectName,
+			paperCode: subject.paperId,
+			subjectCode: subject.subjectCode,
+			credits: subject.credits,
+			marks: 0,
+		}));
+		setData(newInitialData);
 	};
 
 	const addNewRow = () => {
@@ -45,7 +48,7 @@ export default function CGPACalculator() {
 				paperCode: 'Random-paper-code',
 				subjectCode: 'Random-subject-code',
 				credits: 0,
-				marks: 0, // TODO: make this blank
+				marks: 0,
 			},
 		]);
 	};
@@ -82,8 +85,24 @@ export default function CGPACalculator() {
 
 	return (
 		<div className="container mx-auto flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-md">
-			<h1 className="text-2xl font-bold text-[#041E54]">CGPA Calculator</h1>
+			<h1 className="flex items-center gap-2 text-2xl font-bold text-[#041E54]">
+				IPU CGPA Calculator <img src={book} height={32} width={32} />
+			</h1>
 			<div className="mb-2">* Only works for 5th sem CSE and IT students</div>
+			<div className="mb-4 flex items-center">
+				<label htmlFor="branch" className="mr-2 text-lg font-medium text-gray-700">
+					Select Branch:
+				</label>
+				<select
+					id="branch"
+					value={branch}
+					onChange={handleBranchChange}
+					className="rounded-md border border-gray-300 p-2 transition-all duration-200 ease-in-out hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				>
+					<option value={Branch.CSE_IT}>CSE / IT</option>
+					<option value={Branch.ECE}>ECE</option>
+				</select>
+			</div>
 			<form onSubmit={calculateCGPA} className="mb-2">
 				<div className="overflow-x-auto">
 					<table className="w-full border-collapse border border-gray-300">
@@ -216,20 +235,19 @@ export default function CGPACalculator() {
 							</tbody>
 						</table>
 					</div>
-					<p>
-						<ul className="ml-3 list-disc">
-							<li>
-								Grade P, that is the grade point 4 is the course passing grade unless specified
-								otherwise by the Syllabi and Scheme of Teaching and Examination for the respective
-								programme.
-							</li>
-						</ul>
+					{/* <p> */}
+					<ul className="ml-3 list-disc">
 						<li>
-							For grades below the passing grade (P) as defined in the Syllabi and Scheme of Teaching and
-							Examination, the associated grade points are to be taken equal to zero.
+							Grade P, that is the grade point 4 is the course passing grade unless specified otherwise by
+							the Syllabi and Scheme of Teaching and Examination for the respective programme.
 						</li>
-						<li>Both the acquired marks and grades are to be reflected on the term end marksheets.</li>
-					</p>
+					</ul>
+					<li>
+						For grades below the passing grade (P) as defined in the Syllabi and Scheme of Teaching and
+						Examination, the associated grade points are to be taken equal to zero.
+					</li>
+					<li>Both the acquired marks and grades are to be reflected on the term end marksheets.</li>
+					{/* </p> */}
 				</div>
 				<div>
 					<h2 className="text-2xl font-bold text-[#0955A0]">CGPA Divisions:</h2>
@@ -237,49 +255,49 @@ export default function CGPACalculator() {
 						The successful candidates having an overall CGPA higher than or equal to the minimum CGPA that
 						is specified in the Syllabi and Scheme of Teaching and Examination for the award of the degree,
 						are to be awarded the degree and be placed in Divisions as below:
-						<ul className="ml-3 list-disc">
-							<li>CGPA of 6.50 or above are to be placed in the First Division.</li>
-							<li>CGPA of 5.00 - 6.49 are to be placed in the Second Division.</li>
-							<li>CGPA of 4.00 - 4.99 are to be placed in the Third Division.</li>
-							<li>
-								CGPA of 10 are to be placed in the Exemplary Performance. Exemplary Performance shall be
-								awarded, if and only if, every course of the programme offered to the student is passed
-								in the first chance of appearing in the paper that is offered to the student. A student
-								with an academic break shall not be awarded the exemplary performance.
-							</li>
-							<li>
-								The CGPA x 10 shall be deemed equivalent to percentage of marks obtained by the student
-								for the purpose of equivalence to percentage of marks.
-							</li>
-						</ul>
 					</p>
+					<ul className="ml-3 list-disc">
+						<li>CGPA of 6.50 or above are to be placed in the First Division.</li>
+						<li>CGPA of 5.00 - 6.49 are to be placed in the Second Division.</li>
+						<li>CGPA of 4.00 - 4.99 are to be placed in the Third Division.</li>
+						<li>
+							CGPA of 10 are to be placed in the Exemplary Performance. Exemplary Performance shall be
+							awarded, if and only if, every course of the programme offered to the student is passed in
+							the first chance of appearing in the paper that is offered to the student. A student with an
+							academic break shall not be awarded the exemplary performance.
+						</li>
+						<li>
+							The CGPA x 10 shall be deemed equivalent to percentage of marks obtained by the student for
+							the purpose of equivalence to percentage of marks.
+						</li>
+					</ul>
 				</div>
 				<p className="italic">
 					Note: <br />
-					This IPU CGPA Calculator works on the algorithm provided by IPUniversity in the ordinance 11. <br />
-					<ul className="ml-3 list-disc">
-						<li>
-							<a
-								href="http://ipu.ac.in/norms/Ordinance/oridancemain.htm"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-blue-600 underline visited:text-purple-600"
-							>
-								University School of Education, GGSIPU (University Ordinance)
-							</a>
-						</li>
-						<li>
-							<a
-								href="http://ipu.ac.in/norms/Ordinance/ordinanc11020815.pdf"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-blue-600 underline visited:text-purple-600"
-							>
-								Ordinance 11
-							</a>
-						</li>
-					</ul>
+					This IPU CGPA Calculator works on the algorithm provided by IPUniversity in the ordinance 11.{' '}
 				</p>
+				<ul className="ml-3 list-disc italic">
+					<li>
+						<a
+							href="http://ipu.ac.in/norms/Ordinance/oridancemain.htm"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-blue-600 underline visited:text-purple-600"
+						>
+							University School of Education, GGSIPU (University Ordinance)
+						</a>
+					</li>
+					<li>
+						<a
+							href="http://ipu.ac.in/norms/Ordinance/ordinanc11020815.pdf"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-blue-600 underline visited:text-purple-600"
+						>
+							Ordinance 11
+						</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	);
