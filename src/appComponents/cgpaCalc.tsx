@@ -107,7 +107,7 @@ export default function CGPACalculator() {
 	}
 
 	return (
-		<div className="container mx-auto flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-md">
+		<div className="container mx-auto flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-all-sides">
 			<h1 className="flex items-center gap-2 text-2xl font-bold text-[#041E54]">
 				IPU CGPA Calculator <img src={book} height={32} width={32} />
 			</h1>
