@@ -83,7 +83,7 @@ export default function CGPACalculator() {
 	return (
 		<div className="container mx-auto flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-md">
 			<h1 className="text-2xl font-bold text-[#041E54]">CGPA Calculator*</h1>
-			<div className="mb-2">* Only valid for 5th sem CSE and IT students</div>
+			<div className="mb-2">* Only works for 5th sem CSE and IT students</div>
 			<form onSubmit={calculateCGPA} className="mb-2">
 				<div className="overflow-x-auto">
 					<table className="w-full border-collapse border border-gray-300">
