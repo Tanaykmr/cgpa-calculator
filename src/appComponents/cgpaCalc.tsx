@@ -50,13 +50,6 @@ export default function CGPACalculator() {
 		]);
 	};
 
-	const scrollToBottom = (): void => {
-		window.scrollTo({
-			top: document.documentElement.scrollHeight,
-			behavior: 'smooth',
-		});
-	};
-
 	const calculateCGPA = (e: FormEvent) => {
 		e.preventDefault();
 		let totalCredits = 0;
@@ -85,8 +78,6 @@ export default function CGPACalculator() {
 		});
 		const calculatedCGPA = totalGradePoints / totalCredits;
 		setCGPA(isNaN(calculatedCGPA) ? null : parseFloat(calculatedCGPA.toFixed(3)));
-
-		scrollToBottom();
 	};
 
 	return (
