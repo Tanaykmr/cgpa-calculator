@@ -2,10 +2,12 @@ import { marksData } from '@/data/marksData/marksData';
 import { subjectsData } from '@/data/subjectData/subjectData';
 import { Branch } from '@/types';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { FormEvent, useEffect, useState } from 'react';
 import eqn from '/eqn.svg';
 import book from '/book.png';
 import confetti from 'canvas-confetti';
+import { Delete } from '@mui/icons-material';
 
 export default function CGPACalculator() {
 	// State variables
@@ -57,6 +59,10 @@ export default function CGPACalculator() {
 				marks: 0,
 			},
 		]);
+	};
+
+	const deleteRow = () => {
+		setData([...data.slice(0, data.length - 1)]);
 	};
 
 	const calculateCGPA = (e: FormEvent) => {
@@ -174,14 +180,24 @@ export default function CGPACalculator() {
 					</table>
 				</div>
 				<div className="mt-4 flex items-center justify-between">
-					<button
-						type="button"
-						onClick={addNewRow}
-						className="flex items-center rounded-lg border border-gray-300 bg-white p-3 text-gray-800 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow active:translate-y-0.5 active:bg-gray-200"
-					>
-						<AddIcon className="mr-2 h-4 w-4" />
-						Add Row
-					</button>
+					<div className="flex gap-2">
+						<button
+							type="button"
+							onClick={addNewRow}
+							className="flex items-center rounded-lg border border-gray-300 bg-white p-3 text-gray-800 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow active:translate-y-0.5 active:bg-gray-200"
+						>
+							<AddIcon className="mr-2 h-4 w-4" />
+							Add Row
+						</button>
+						<button
+							type="button"
+							onClick={deleteRow}
+							className="flex items-center rounded-lg border border-gray-300 bg-white p-3 text-gray-800 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow active:translate-y-0.5 active:bg-gray-200"
+						>
+							<Delete className="mr-2 h-4 w-4" />
+							Delete Row
+						</button>
+					</div>
 					{/* <ConfettiButton
 						options={{ particleCount: 100, spread: 135, ticks: 400 }}
 						type="submit"
