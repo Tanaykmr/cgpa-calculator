@@ -45,7 +45,7 @@ export default function CGPACalculator() {
 				paperCode: 'Random-paper-code',
 				subjectCode: 'Random-subject-code',
 				credits: 0,
-				marks: 0,
+				marks: 0, // TODO: make this blank
 			},
 		]);
 	};
@@ -82,7 +82,7 @@ export default function CGPACalculator() {
 
 	return (
 		<div className="container mx-auto flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-md">
-			<h1 className="text-2xl font-bold text-[#041E54]">CGPA Calculator*</h1>
+			<h1 className="text-2xl font-bold text-[#041E54]">CGPA Calculator</h1>
 			<div className="mb-2">* Only works for 5th sem CSE and IT students</div>
 			<form onSubmit={calculateCGPA} className="mb-2">
 				<div className="overflow-x-auto">
@@ -122,7 +122,7 @@ export default function CGPACalculator() {
 										<input
 											required
 											type="number"
-											value={row.marks}
+											// value={row.marks}
 											onChange={(e) =>
 												handleInputChange(index, 'marks', parseInt(e.target.value))
 											}
